@@ -11,8 +11,6 @@
 # in these three files.
 ###########
 
-namePrefix: iter8-
-
 commonLabels:
   creator: iter8
 
