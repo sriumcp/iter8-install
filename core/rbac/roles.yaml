@@ -39,7 +39,7 @@ rules:
   - watch
 ---
 # This role enables creation, watching and deletion of jobs
-kind: ClusterRole
+kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: jobs
