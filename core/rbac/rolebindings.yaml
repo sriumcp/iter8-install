@@ -38,7 +38,7 @@ metadata:
   name: jobs
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: jobs
 subjects:
 - kind: ServiceAccount
