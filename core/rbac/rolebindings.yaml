@@ -33,7 +33,7 @@ subjects:
 # This role binding authorizes Iter8 controller to manipulate 
 # jobs in the cluster in Iter8 namespace
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: jobs
 roleRef:

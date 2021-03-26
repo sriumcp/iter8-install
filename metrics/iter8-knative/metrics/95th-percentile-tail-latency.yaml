@@ -8,7 +8,7 @@ spec:
   params:
   - name: query
     value: | 
-      histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{revision_name='$revision'}[$interval])) by (le))
+      histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{revision_name='$revision'}[$elapsedTime])) by (le))
   type: gauge
   sampleSize: request-count
   provider: prometheus

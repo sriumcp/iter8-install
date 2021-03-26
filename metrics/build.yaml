@@ -19,7 +19,7 @@ spec:
   params:
   - name: query
     value: |
-      histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{revision_name='$revision'}[$interval])) by (le))
+      histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{revision_name='$revision'}[$elapsedTime])) by (le))
   provider: prometheus
   sampleSize: request-count
   type: gauge
@@ -39,7 +39,7 @@ spec:
   params:
   - name: query
     value: |
-      sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[$interval])) or on() vector(0)
+      sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[$elapsedTime])) or on() vector(0)
   provider: prometheus
   type: counter
   urlTemplate: http://prometheus-operated.iter8-system:9090/api/v1/query
@@ -57,7 +57,7 @@ spec:
   params:
   - name: query
     value: |
-      (sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$interval])) or on() vector(0))
+      (sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[$elapsedTime])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$elapsedTime])) or on() vector(0))
   provider: prometheus
   sampleSize: request-count
   type: gauge
@@ -76,7 +76,7 @@ spec:
   params:
   - name: query
     value: |
-      (sum(increase(revision_app_request_latencies_sum{revision_name='$revision'}[$interval])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$interval])) or on() vector(0))
+      (sum(increase(revision_app_request_latencies_sum{revision_name='$revision'}[$elapsedTime])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$elapsedTime])) or on() vector(0))
   provider: prometheus
   sampleSize: request-count
   type: gauge
@@ -96,7 +96,7 @@ spec:
   params:
   - name: query
     value: |
-      sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$interval])) or on() vector(0)
+      sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$elapsedTime])) or on() vector(0)
   provider: prometheus
   type: counter
   urlTemplate: http://prometheus-operated.iter8-system:9090/api/v1/query
