@@ -38,11 +38,7 @@ rules:
   - list
   - watch
 ---
-<<<<<<< HEAD
 # This cluster role enables creation, watching and deletion of jobs
-=======
-# This role enables creation, watching and deletion of jobs
->>>>>>> 178f8a1 (clusterrole for jobs)
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
