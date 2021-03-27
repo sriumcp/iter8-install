@@ -20,7 +20,7 @@ spec:
         - /manager
         args:
         - --enable-leader-election
-        image: iter8/etc3:latest
+        image: sriumcp/etc3:latest
         imagePullPolicy: Always
         name: manager
         env:
