@@ -75,6 +75,12 @@ rules:
   - update
   - patch
   - delete
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
 ---
 # This role enables reading secrets
 apiVersion: rbac.authorization.k8s.io/v1
