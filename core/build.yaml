@@ -976,6 +976,27 @@ kind: Role
 metadata:
   labels:
     creator: iter8
+  name: iter8-jobs
+  namespace: iter8-system
+rules:
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    creator: iter8
   name: iter8-leader-election-role
   namespace: iter8-system
 rules:
@@ -1023,26 +1044,6 @@ rules:
   - get
   - patch
   - update
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  labels:
-    creator: iter8
-  name: iter8-jobs
-rules:
-- apiGroups:
-  - batch
-  resources:
-  - jobs
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -1138,7 +1139,7 @@ metadata:
   namespace: iter8-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: iter8-jobs
 subjects:
 - kind: ServiceAccount
