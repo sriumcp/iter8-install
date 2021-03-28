@@ -1,6 +1,9 @@
 name: Create auto PR
 
-on: ["push"]
+on:
+  push:
+    branches:
+    - main
 
 jobs:
   sync-kubectl-kustomize-on-push:
