@@ -1294,7 +1294,7 @@ data:
           containers:
           - name: iter8-handler
             # to change handler version, edit the line below
-            image: iter8/handler:0.1.13-pre
+            image: iter8/handler:0.1.13
             command: ["handler"]
             args: ["run", "-a", "$(ACTION)"]
             env:
@@ -1354,7 +1354,7 @@ spec:
         creator: iter8
     spec:
       containers:
-      - image: iter8/iter8-analytics:2.0.0-pre.3
+      - image: iter8/iter8-analytics:2.0.0
         imagePullPolicy: Always
         name: iter8-analytics
         resources: {}
@@ -1394,7 +1394,7 @@ spec:
               fieldPath: metadata.namespace
         - name: HANDLERS_DIR
           value: /handlers
-        image: iter8/etc3:0.1.19-pre.6
+        image: iter8/etc3:0.1.19
         imagePullPolicy: Always
         name: manager
         resources:
