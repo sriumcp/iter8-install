@@ -15,5 +15,3 @@ echo "Verifying Iter8 installation"
 kubectl wait --for condition=ready --timeout=300s pods --all -n iter8-system
 
 set +e
-
-return 0
