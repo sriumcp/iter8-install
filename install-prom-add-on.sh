@@ -3,7 +3,7 @@
 set -e
 
 # Step 0: Export TAG
-export TAG="${TAG:-v0.3.0-pre.4}"
+export TAG="${TAG:-v0.3.0}"
 
 # Step 1: Install Prometheus add-on
 # This step assumes you have installed Iter8 using install.sh

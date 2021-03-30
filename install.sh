@@ -3,7 +3,7 @@
 set -e
 
 # Step 0: Export TAG
-export TAG="${TAG:-v0.3.0-pre.4}"
+export TAG="${TAG:-v0.3.0}"
 
 # Step 1: Install Iter8
 echo "Installing Iter8"
