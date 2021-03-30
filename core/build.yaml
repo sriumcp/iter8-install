@@ -1402,7 +1402,7 @@ spec:
               fieldPath: metadata.namespace
         - name: HANDLERS_DIR
           value: /handlers
-        image: iter8/etc3:0.1.19-pre.4
+        image: iter8/etc3:0.1.19-pre.6
         imagePullPolicy: Always
         name: manager
         resources:
