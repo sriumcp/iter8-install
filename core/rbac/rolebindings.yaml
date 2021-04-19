@@ -44,44 +44,6 @@ subjects:
 - kind: ServiceAccount
   name: controller
 ---
-# Helm v3 uses secrets to store Helm release information.
-# 
-# By default, when Helm is used within Iter8 experiments, secrets 
-# will be located in the Iter8 namespace.
-#
-# This role binding enables Iter8 handler to read 
-# secrets in the namespace where Iter8 is installed
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: secret-reader-handler
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: secret-reader
-subjects:
-- kind: ServiceAccount
-  name: handlers
----
-# Helm v3 uses secrets to store Helm release information.
-# 
-# By default, when Helm is used within Iter8 experiments, secrets 
-# will be located in the Iter8 namespace.
-#
-# This role binding enables Iter8 handler to write 
-# secrets in the namespace where Iter8 is installed
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: secret-writer-handler
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: secret-writer
-subjects:
-- kind: ServiceAccount
-  name: handlers
----
 # Iter8 analytics may use secrets to populate authentication information
 # in REST query headers while querying metrics backends.
 # 

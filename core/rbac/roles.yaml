@@ -93,19 +93,3 @@ rules:
   resources:
   - secrets
   verbs: ["get", "list", "watch"]
----
-# This role enables writing secrets; 
-# Iter8 handler uses this role during Helm release tasks
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: secret-writer
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs: ["create", "update", "patch", "delete"]
-
-
-
