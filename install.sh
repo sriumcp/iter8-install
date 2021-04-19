@@ -5,7 +5,7 @@ set -e
 # Step 0: Export GIT_ACCOUNT and TAG
 # GIT_ACCOUNT enables manual testing from a fork
 export GIT_ACCOUNT="${GIT_ACCOUNT:-iter8-tools}"
-export TAG="${TAG:-v0.3.0}"
+export TAG="${TAG:-v0.3.2}"
 
 # Step 1: Install Iter8
 echo "Installing Iter8"
