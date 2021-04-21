@@ -13,3 +13,4 @@
 
 resources:
 - iter8-knative
+- iter8-istio

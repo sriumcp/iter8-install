@@ -3,6 +3,43 @@ kind: ServiceMonitor
 metadata:
   labels:
     creator: iter8
+  name: iter8-istio-dataplane-monitoring
+  namespace: iter8-istio
+spec:
+  endpoints:
+  - path: /metrics
+    targetPort: 9080
+  - interval: 15s
+    path: /stats/prometheus
+    relabelings:
+    - action: keep
+      regex: .*-envoy-prom
+      sourceLabels:
+      - __meta_kubernetes_pod_container_port_name
+    - action: labelmap
+      regex: __meta_kubernetes_pod_label_(.+)
+    - action: replace
+      sourceLabels:
+      - __meta_kubernetes_namespace
+      targetLabel: namespace
+    - action: replace
+      sourceLabels:
+      - __meta_kubernetes_pod_name
+      targetLabel: pod_name
+    targetPort: http-envoy-prom
+  jobLabel: kubernetes-pods
+  namespaceSelector:
+    any: true
+  selector:
+    matchExpressions:
+    - key: istio-prometheus-ignore
+      operator: DoesNotExist
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    creator: iter8
   name: iter8-ksvc-monitoring
   namespace: iter8-knative
 spec:

@@ -46,14 +46,10 @@ spec:
         description: Experiment is the Schema for the experiments API
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
             type: string
           metadata:
             type: object
@@ -61,22 +57,15 @@ spec:
             description: ExperimentSpec defines the desired state of Experiment
             properties:
               criteria:
-                description: Criteria contains a list of Criterion for assessing the
-                  candidates Note that the number of rewards that can be/must be specified
-                  depends on the testing pattern
+                description: Criteria contains a list of Criterion for assessing the candidates Note that the number of rewards that can be/must be specified depends on the testing pattern
                 properties:
                   indicators:
-                    description: Indicators is a list of metrics to be measured and
-                      reported on each iteration of the experiment.
+                    description: Indicators is a list of metrics to be measured and reported on each iteration of the experiment.
                     items:
                       type: string
                     type: array
                   objectives:
-                    description: Objectives is a list of conditions on metrics that
-                      must be tested on each iteration of the experiment. Failure
-                      of an objective might reduces the likelihood that a version
-                      will be selected as the winning version. Failure of an objective
-                      might also trigger an experiment rollback.
+                    description: Objectives is a list of conditions on metrics that must be tested on each iteration of the experiment. Failure of an objective might reduces the likelihood that a version will be selected as the winning version. Failure of an objective might also trigger an experiment rollback.
                     items:
                       description: Objective is a service level objective
                       properties:
@@ -84,30 +73,20 @@ spec:
                           anyOf:
                           - type: integer
                           - type: string
-                          description: UpperLimit is the minimum acceptable value
-                            of the metric.
+                          description: UpperLimit is the minimum acceptable value of the metric.
                           pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                           x-kubernetes-int-or-string: true
                         metric:
-                          description: Metric is the name of the metric resource that
-                            defines the metric to be measured. If the value contains
-                            a "/", the prefix will be considered to be a namespace
-                            name. If the value does not contain a "/", the metric
-                            should be defined either in the same namespace or in the
-                            default domain namespace (defined as a property of iter8
-                            when installed). The experiment namespace takes precedence.
+                          description: Metric is the name of the metric resource that defines the metric to be measured. If the value contains a "/", the prefix will be considered to be a namespace name. If the value does not contain a "/", the metric should be defined either in the same namespace or in the default domain namespace (defined as a property of iter8 when installed). The experiment namespace takes precedence.
                           type: string
                         rollback_on_failure:
-                          description: RollbackOnFailure indicates that if the criterion
-                            is not met, the experiment should be ended default is
-                            false
+                          description: RollbackOnFailure indicates that if the criterion is not met, the experiment should be ended default is false
                           type: boolean
                         upperLimit:
                           anyOf:
                           - type: integer
                           - type: string
-                          description: UpperLimit is the maximum acceptable value
-                            of the metric.
+                          description: UpperLimit is the maximum acceptable value of the metric.
                           pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                           x-kubernetes-int-or-string: true
                       required:
@@ -115,14 +94,10 @@ spec:
                       type: object
                     type: array
                   requestCount:
-                    description: RequestCount identifies metric to be used to count
-                      how many requests a version has seen Typically set by the controller
-                      (based on setup configuration) but can be overridden by the
-                      user
+                    description: RequestCount identifies metric to be used to count how many requests a version has seen Typically set by the controller (based on setup configuration) but can be overridden by the user
                     type: string
                   rewards:
-                    description: Rewards is a list of metrics that should be used
-                      to evaluate the reward for a version in the experiment.
+                    description: Rewards is a list of metrics that should be used to evaluate the reward for a version in the experiment.
                     items:
                       description: Reward ..
                       properties:
@@ -130,9 +105,7 @@ spec:
                           description: Metric ..
                           type: string
                         preferredDirection:
-                          description: PreferredDirection identifies whether higher
-                            or lower values of the reward metric are preferred valid
-                            values are "higher" and "lower"
+                          description: PreferredDirection identifies whether higher or lower values of the reward metric are preferred valid values are "higher" and "lower"
                           enum:
                           - High
                           - Low
@@ -143,29 +116,24 @@ spec:
                       type: object
                     type: array
                   strength:
-                    description: Strength identifies the required degree of support
-                      the analytics must provide before it will assert success for
-                      an objective.
+                    description: Strength identifies the required degree of support the analytics must provide before it will assert success for an objective.
                     x-kubernetes-preserve-unknown-fields: true
                 type: object
               duration:
                 description: Duration describes how long the experiment will last.
                 properties:
                   intervalSeconds:
-                    description: IntervalSeconds is the length of an interval of the
-                      experiment in seconds Default is 20 (seconds)
+                    description: IntervalSeconds is the length of an interval of the experiment in seconds Default is 20 (seconds)
                     format: int32
                     minimum: 1
                     type: integer
                   iterationsPerLoop:
-                    description: IterationsPerLoop is the maximum number of iterations
-                      Default is 15
+                    description: IterationsPerLoop is the maximum number of iterations Default is 15
                     format: int32
                     minimum: 1
                     type: integer
                   maxLoops:
-                    description: MaxLoops is the maximum number of loops Default is
-                      1 Reserved for future use
+                    description: MaxLoops is the maximum number of loops Default is 1 Reserved for future use
                     format: int32
                     minimum: 1
                     type: integer
@@ -180,30 +148,21 @@ spec:
                         description: TaskSpec contains the specification of a task.
                         properties:
                           task:
-                            description: Task unique identifies the task to be executed
-                              with the library. Examples include 'init-experiment',
-                              'exec', etc.
+                            description: Task unique identifies the task to be executed with the library. Examples include 'init-experiment', 'exec', etc.
                             type: string
                           with:
                             additionalProperties:
                               x-kubernetes-preserve-unknown-fields: true
-                            description: With holds inputs to this task. Different
-                              task require different types of inputs. Hence, this
-                              data is held as json.RawMessage to be decoded by individual
-                              task libraries.
+                            description: With holds inputs to this task. Different task require different types of inputs. Hence, this data is held as json.RawMessage to be decoded by individual task libraries.
                             type: object
                         required:
                         - task
                         type: object
                       type: array
-                    description: Actions define the collections of tasks that are
-                      executed by handlers. Specifically, start and finish actions
-                      are invoked by start and finish handlers respectively.
+                    description: Actions define the collections of tasks that are executed by handlers. Specifically, start and finish actions are invoked by start and finish handlers respectively.
                     type: object
                   deploymentPattern:
-                    description: DeploymentPattern is the deployment pattern of an
-                      experiment. It takes effect when the testing pattern is one
-                      of Canary, A/B or A/B/n. It defaults to Progressive.
+                    description: DeploymentPattern is the deployment pattern of an experiment. It takes effect when the testing pattern is one of Canary, A/B or A/B/n. It defaults to Progressive.
                     enum:
                     - FixedSplit
                     - Progressive
@@ -218,20 +177,16 @@ spec:
                     - Conformance
                     type: string
                   weights:
-                    description: Weights modify the behavior of the traffic split
-                      algorithm. Defaults depend on the experiment type.
+                    description: Weights modify the behavior of the traffic split algorithm. Defaults depend on the experiment type.
                     properties:
                       maxCandidateWeight:
-                        description: MaxCandidateWeight is the maximum percent of
-                          traffic that should be sent to the candidate versions during
-                          an experiment
+                        description: MaxCandidateWeight is the maximum percent of traffic that should be sent to the candidate versions during an experiment
                         format: int32
                         maximum: 100
                         minimum: 0
                         type: integer
                       maxCandidateWeightIncrement:
-                        description: MaxCandidateWeightIncrement the maximum permissible
-                          increase in traffic to a candidate in one iteration
+                        description: MaxCandidateWeightIncrement the maximum permissible increase in traffic to a candidate in one iteration
                         format: int32
                         maximum: 100
                         minimum: 0
@@ -241,13 +196,11 @@ spec:
                 - testingPattern
                 type: object
               target:
-                description: Target is used to enable concurrent experimentation Two
-                  experiments cannot be running concurrently for the same target.
+                description: Target is used to enable concurrent experimentation Two experiments cannot be running concurrently for the same target.
                 minLength: 1
                 type: string
               versionInfo:
-                description: VersionInfo is information about versions that is typically
-                  provided by the domain start handler
+                description: VersionInfo is information about versions that is typically provided by the domain start handler
                 properties:
                   baseline:
                     description: Baseline is baseline version
@@ -256,11 +209,9 @@ spec:
                         description: Name is a name for the version
                         type: string
                       variables:
-                        description: Variables is a list of variables that can be
-                          used by handlers and in metrics queries
+                        description: Variables is a list of variables that can be used by handlers and in metrics queries
                         items:
-                          description: NamedValue name/value to be used in constructing
-                            a REST query to backend metrics server
+                          description: NamedValue name/value to be used in constructing a REST query to backend metrics server
                           properties:
                             name:
                               description: Name of parameter
@@ -274,25 +225,13 @@ spec:
                           type: object
                         type: array
                       weightObjRef:
-                        description: WeightObjRef is a reference to another kubernetes
-                          object
+                        description: WeightObjRef is a reference to another kubernetes object
                         properties:
                           apiVersion:
                             description: API version of the referent.
                             type: string
                           fieldPath:
-                            description: 'If referring to a piece of an object instead
-                              of an entire object, this string should contain a valid
-                              JSON/Go field access statement, such as desiredState.manifest.containers[2].
-                              For example, if the object reference is to a container
-                              within a pod, this would take on a value like: "spec.containers{name}"
-                              (where "name" refers to the name of the container that
-                              triggered the event) or if no container name is specified
-                              "spec.containers[2]" (container with index 2 in this
-                              pod). This syntax is chosen only to have some well-defined
-                              way of referencing a part of an object. TODO: this design
-                              is not final and this field is subject to change in
-                              the future.'
+                            description: 'If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.'
                             type: string
                           kind:
                             description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
@@ -304,8 +243,7 @@ spec:
                             description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
                             type: string
                           resourceVersion:
-                            description: 'Specific resourceVersion to which this reference
-                              is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
+                            description: 'Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
                             type: string
                           uid:
                             description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
@@ -323,11 +261,9 @@ spec:
                           description: Name is a name for the version
                           type: string
                         variables:
-                          description: Variables is a list of variables that can be
-                            used by handlers and in metrics queries
+                          description: Variables is a list of variables that can be used by handlers and in metrics queries
                           items:
-                            description: NamedValue name/value to be used in constructing
-                              a REST query to backend metrics server
+                            description: NamedValue name/value to be used in constructing a REST query to backend metrics server
                             properties:
                               name:
                                 description: Name of parameter
@@ -341,25 +277,13 @@ spec:
                             type: object
                           type: array
                         weightObjRef:
-                          description: WeightObjRef is a reference to another kubernetes
-                            object
+                          description: WeightObjRef is a reference to another kubernetes object
                           properties:
                             apiVersion:
                               description: API version of the referent.
                               type: string
                             fieldPath:
-                              description: 'If referring to a piece of an object instead
-                                of an entire object, this string should contain a
-                                valid JSON/Go field access statement, such as desiredState.manifest.containers[2].
-                                For example, if the object reference is to a container
-                                within a pod, this would take on a value like: "spec.containers{name}"
-                                (where "name" refers to the name of the container
-                                that triggered the event) or if no container name
-                                is specified "spec.containers[2]" (container with
-                                index 2 in this pod). This syntax is chosen only to
-                                have some well-defined way of referencing a part of
-                                an object. TODO: this design is not final and this
-                                field is subject to change in the future.'
+                              description: 'If referring to a piece of an object instead of an entire object, this string should contain a valid JSON/Go field access statement, such as desiredState.manifest.containers[2]. For example, if the object reference is to a container within a pod, this would take on a value like: "spec.containers{name}" (where "name" refers to the name of the container that triggered the event) or if no container name is specified "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to have some well-defined way of referencing a part of an object. TODO: this design is not final and this field is subject to change in the future.'
                               type: string
                             kind:
                               description: 'Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
@@ -368,12 +292,10 @@ spec:
                               description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                               type: string
                             namespace:
-                              description: 'Namespace of the referent. More info:
-                                https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                              description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
                               type: string
                             resourceVersion:
-                              description: 'Specific resourceVersion to which this
-                                reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
+                              description: 'Specific resourceVersion to which this reference is made, if any. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency'
                               type: string
                             uid:
                               description: 'UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids'
@@ -411,22 +333,18 @@ spec:
                                     anyOf:
                                     - type: integer
                                     - type: string
-                                    description: Max value observed for this metric
-                                      for this version
+                                    description: Max value observed for this metric for this version
                                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                                     x-kubernetes-int-or-string: true
                                   min:
                                     anyOf:
                                     - type: integer
                                     - type: string
-                                    description: Min value observed for this metric
-                                      for this version
+                                    description: Min value observed for this metric for this version
                                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                                     x-kubernetes-int-or-string: true
                                   sampleSize:
-                                    description: SampleSize is the  size of the sample
-                                      used for computing this metric. This field is
-                                      applicable only to gauge metrics
+                                    description: SampleSize is the  size of the sample used for computing this metric. This field is applicable only to gauge metrics
                                     format: int32
                                     minimum: 0
                                     type: integer
@@ -434,35 +352,30 @@ spec:
                                     anyOf:
                                     - type: integer
                                     - type: string
-                                    description: Value of the metric observed for
-                                      this version
+                                    description: Value of the metric observed for this version
                                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                                     x-kubernetes-int-or-string: true
                                 type: object
-                              description: Data is a map from version name to the
-                                most recent aggregated metrics data for that version
+                              description: Data is a map from version name to the most recent aggregated metrics data for that version
                               type: object
                             max:
                               anyOf:
                               - type: integer
                               - type: string
-                              description: Max value observed for this metric across
-                                all versions
+                              description: Max value observed for this metric across all versions
                               pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                               x-kubernetes-int-or-string: true
                             min:
                               anyOf:
                               - type: integer
                               - type: string
-                              description: Min value observed for this metric across
-                                all versions
+                              description: Min value observed for this metric across all versions
                               pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                               x-kubernetes-int-or-string: true
                           required:
                           - data
                           type: object
-                        description: Data is a map from metric name to most recent
-                          metric data
+                        description: Data is a map from metric name to most recent metric data
                         type: object
                       message:
                         description: Message optional messsage for user
@@ -471,8 +384,7 @@ spec:
                         description: Provenance is source of data
                         type: string
                       timestamp:
-                        description: Timestamp is the timestamp when the controller
-                          got its data from an analytics engine
+                        description: Timestamp is the timestamp when the controller got its data from an analytics engine
                         format: date-time
                         type: string
                     required:
@@ -489,11 +401,7 @@ spec:
                           items:
                             type: boolean
                           type: array
-                        description: Data is a map from version name to an array of
-                          indicators as to whether or not the objectives are satisfied
-                          The order of the array entries is the same as the order
-                          of objectives in spec.criteria.objectives There must be
-                          an entry for each objective
+                        description: Data is a map from version name to an array of indicators as to whether or not the objectives are satisfied The order of the array entries is the same as the order of objectives in spec.criteria.objectives There must be an entry for each objective
                         type: object
                       message:
                         description: Message optional messsage for user
@@ -502,8 +410,7 @@ spec:
                         description: Provenance is source of data
                         type: string
                       timestamp:
-                        description: Timestamp is the timestamp when the controller
-                          got its data from an analytics engine
+                        description: Timestamp is the timestamp when the controller got its data from an analytics engine
                         format: date-time
                         type: string
                     required:
@@ -538,8 +445,7 @@ spec:
                         description: Provenance is source of data
                         type: string
                       timestamp:
-                        description: Timestamp is the timestamp when the controller
-                          got its data from an analytics engine
+                        description: Timestamp is the timestamp when the controller got its data from an analytics engine
                         format: date-time
                         type: string
                     required:
@@ -557,8 +463,7 @@ spec:
                             description: Winner if found
                             type: string
                           winnerFound:
-                            description: WinnerFound whether or not a winning version
-                              has been identified
+                            description: WinnerFound whether or not a winning version has been identified
                             type: boolean
                         required:
                         - winnerFound
@@ -570,8 +475,7 @@ spec:
                         description: Provenance is source of data
                         type: string
                       timestamp:
-                        description: Timestamp is the timestamp when the controller
-                          got its data from an analytics engine
+                        description: Timestamp is the timestamp when the controller got its data from an analytics engine
                         format: date-time
                         type: string
                     required:
@@ -581,8 +485,7 @@ spec:
                     type: object
                 type: object
               completedIterations:
-                description: CurrentIteration is the current iteration number. It
-                  is undefined until the experiment starts.
+                description: CurrentIteration is the current iteration number. It is undefined until the experiment starts.
                 format: int32
                 type: integer
               conditions:
@@ -591,8 +494,7 @@ spec:
                   description: ExperimentCondition describes a condition of an experiment
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the time when this condition
-                        is last updated
+                      description: LastTransitionTime is the time when this condition is last updated
                       format: date-time
                       type: string
                     message:
@@ -617,8 +519,7 @@ spec:
                   type: object
                 type: array
               currentWeightDistribution:
-                description: CurrentWeightDistribution is currently applied traffic
-                  weights
+                description: CurrentWeightDistribution is currently applied traffic weights
                 items:
                   description: WeightData is the weight for a version
                   properties:
@@ -635,8 +536,7 @@ spec:
                   type: object
                 type: array
               initTime:
-                description: InitTime is the times when the experiment is initialized
-                  (experiment CR is new) matches example
+                description: InitTime is the times when the experiment is initialized (experiment CR is new) matches example
                 format: date-time
                 type: string
               lastUpdateTime:
@@ -647,9 +547,7 @@ spec:
                 description: Message specifies message to show in the kubectl printer
                 type: string
               metrics:
-                description: Metrics is a list of all the metrics used in the experiment
-                  It is inserted by the controller from the references in spec.criteria
-                  Key is the name as referenced in spec.criteria
+                description: Metrics is a list of all the metrics used in the experiment It is inserted by the controller from the references in spec.criteria Key is the name as referenced in spec.criteria
                 items:
                   description: MetricInfo is name/value pair; entry for list of metrics
                   properties:
@@ -657,16 +555,10 @@ spec:
                       description: MetricObj is the referenced metric
                       properties:
                         apiVersion:
-                          description: 'APIVersion defines the versioned schema of
-                            this representation of an object. Servers should convert
-                            recognized schemas to the latest internal value, and may
-                            reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+                          description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
                           type: string
                         kind:
-                          description: 'Kind is a string value representing the REST
-                            resource this object represents. Servers may infer this
-                            from the endpoint the client submits requests to. Cannot
-                            be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                          description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
                           type: string
                         metadata:
                           type: object
@@ -677,16 +569,9 @@ spec:
                               description: Text description of the metric
                               type: string
                             headerTemplates:
-                              description: HeaderTemplates are templates for headers
-                                that should be passed to the metrics backend. Typically
-                                these are authentication headers. Any fields of the
-                                form '$name' are treated as variables whose value
-                                is looked up in the secret referred to by spec.secretRef.
-                                If the secret does not contain the variable as a key,
-                                the full string "$name" is used.
+                              description: HeaderTemplates are templates for headers that should be passed to the metrics backend. Typically these are authentication headers. Any fields of the form '$name' are treated as variables whose value is looked up in the secret referred to by spec.secretRef. If the secret does not contain the variable as a key, the full string "$name" is used.
                               items:
-                                description: NamedValue name/value to be used in constructing
-                                  a REST query to backend metrics server
+                                description: NamedValue name/value to be used in constructing a REST query to backend metrics server
                                 properties:
                                   name:
                                     description: Name of parameter
@@ -700,17 +585,13 @@ spec:
                                 type: object
                               type: array
                             jqExpression:
-                              description: JQExpression defines how the value of the
-                                metric should be extracted from the metric value returned
-                                by a query to the backend metrics server
+                              description: JQExpression defines how the value of the metric should be extracted from the metric value returned by a query to the backend metrics server
                               minLength: 1
                               type: string
                             params:
-                              description: Params are key/value pairs used to construct
-                                a REST query to the metrics backend
+                              description: Params are key/value pairs used to construct a REST query to the metrics backend
                               items:
-                                description: NamedValue name/value to be used in constructing
-                                  a REST query to backend metrics server
+                                description: NamedValue name/value to be used in constructing a REST query to backend metrics server
                                 properties:
                                   name:
                                     description: Name of parameter
@@ -724,20 +605,15 @@ spec:
                                 type: object
                               type: array
                             provider:
-                              description: Provider identifies the metric backend
-                                including its authentication properties and its unmarshaller
+                              description: Provider identifies the metric backend including its authentication properties and its unmarshaller
                               minLength: 1
                               type: string
                             sampleSize:
-                              description: SampleSize is a reference to a counter
-                                metric resource. It needs to indicte the number of
-                                data points over which this metric is computed.
+                              description: SampleSize is a reference to a counter metric resource. It needs to indicte the number of data points over which this metric is computed.
                               minLength: 1
                               type: string
                             secret:
-                              description: SecretRef the name of a kubernetes Secret
-                                containing authentication details for the metrics
-                                backend
+                              description: SecretRef the name of a kubernetes Secret containing authentication details for the metrics backend
                               minLength: 1
                               type: string
                             type:
@@ -751,12 +627,7 @@ spec:
                               description: Units used for display only
                               type: string
                             urlTemplate:
-                              description: URLTemplate is a template of the url of
-                                metrics backend. Any fields pf the form '$name' are
-                                treated as variables whose value is looked up in the
-                                secret referred to by spec.secretRef. If the secret
-                                does not contain the variable as a key, the full string
-                                "$name" is used.
+                              description: URLTemplate is a template of the url of metrics backend. Any fields pf the form '$name' are treated as variables whose value is looked up in the secret referred to by spec.secretRef. If the secret does not contain the variable as a key, the full string "$name" is used.
                               type: string
                           required:
                           - urlTemplate
@@ -764,8 +635,7 @@ spec:
                       type: object
                       x-kubernetes-embedded-resource: true
                     name:
-                      description: Name is identifier for metric.  Can be of the form
-                        "name" or "namespace/name"
+                      description: Name is identifier for metric.  Can be of the form "name" or "namespace/name"
                       type: string
                   required:
                   - metricObj
@@ -773,8 +643,7 @@ spec:
                   type: object
                 type: array
               stage:
-                description: Stage indicates where the experiment is in its process
-                  of execution
+                description: Stage indicates where the experiment is in its process of execution
                 enum:
                 - Waiting
                 - Initializing
@@ -783,15 +652,11 @@ spec:
                 - Completed
                 type: string
               startTime:
-                description: StartTime is the time when the experiment starts (after
-                  the start handler finished) matches
+                description: StartTime is the time when the experiment starts (after the start handler finished) matches
                 format: date-time
                 type: string
               versionRecommendedForPromotion:
-                description: VersionRecommendedForPromotion is the version recommended
-                  as the baseline after the experiment completes. Will be set to the
-                  winner (status.analysis[].data.winner) or to the current baseline
-                  in the case of a rollback.
+                description: VersionRecommendedForPromotion is the version recommended as the baseline after the experiment completes. Will be set to the winner (status.analysis[].data.winner) or to the current baseline in the case of a rollback.
                 type: string
             type: object
         type: object
@@ -837,14 +702,10 @@ spec:
         description: Metric is the Schema for the metrics API
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
             type: string
           metadata:
             type: object
@@ -855,15 +716,9 @@ spec:
                 description: Text description of the metric
                 type: string
               headerTemplates:
-                description: HeaderTemplates are templates for headers that should
-                  be passed to the metrics backend. Typically these are authentication
-                  headers. Any fields of the form '$name' are treated as variables
-                  whose value is looked up in the secret referred to by spec.secretRef.
-                  If the secret does not contain the variable as a key, the full string
-                  "$name" is used.
+                description: HeaderTemplates are templates for headers that should be passed to the metrics backend. Typically these are authentication headers. Any fields of the form '$name' are treated as variables whose value is looked up in the secret referred to by spec.secretRef. If the secret does not contain the variable as a key, the full string "$name" is used.
                 items:
-                  description: NamedValue name/value to be used in constructing a
-                    REST query to backend metrics server
+                  description: NamedValue name/value to be used in constructing a REST query to backend metrics server
                   properties:
                     name:
                       description: Name of parameter
@@ -877,17 +732,13 @@ spec:
                   type: object
                 type: array
               jqExpression:
-                description: JQExpression defines how the value of the metric should
-                  be extracted from the metric value returned by a query to the backend
-                  metrics server
+                description: JQExpression defines how the value of the metric should be extracted from the metric value returned by a query to the backend metrics server
                 minLength: 1
                 type: string
               params:
-                description: Params are key/value pairs used to construct a REST query
-                  to the metrics backend
+                description: Params are key/value pairs used to construct a REST query to the metrics backend
                 items:
-                  description: NamedValue name/value to be used in constructing a
-                    REST query to backend metrics server
+                  description: NamedValue name/value to be used in constructing a REST query to backend metrics server
                   properties:
                     name:
                       description: Name of parameter
@@ -901,19 +752,15 @@ spec:
                   type: object
                 type: array
               provider:
-                description: Provider identifies the metric backend including its
-                  authentication properties and its unmarshaller
+                description: Provider identifies the metric backend including its authentication properties and its unmarshaller
                 minLength: 1
                 type: string
               sampleSize:
-                description: SampleSize is a reference to a counter metric resource.
-                  It needs to indicte the number of data points over which this metric
-                  is computed.
+                description: SampleSize is a reference to a counter metric resource. It needs to indicte the number of data points over which this metric is computed.
                 minLength: 1
                 type: string
               secret:
-                description: SecretRef the name of a kubernetes Secret containing
-                  authentication details for the metrics backend
+                description: SecretRef the name of a kubernetes Secret containing authentication details for the metrics backend
                 minLength: 1
                 type: string
               type:
@@ -927,11 +774,7 @@ spec:
                 description: Units used for display only
                 type: string
               urlTemplate:
-                description: URLTemplate is a template of the url of metrics backend.
-                  Any fields pf the form '$name' are treated as variables whose value
-                  is looked up in the secret referred to by spec.secretRef. If the
-                  secret does not contain the variable as a key, the full string "$name"
-                  is used.
+                description: URLTemplate is a template of the url of metrics backend. Any fields pf the form '$name' are treated as variables whose value is looked up in the secret referred to by spec.secretRef. If the secret does not contain the variable as a key, the full string "$name" is used.
                 type: string
             required:
             - urlTemplate
@@ -1023,6 +866,46 @@ rules:
   - get
   - patch
   - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    creator: iter8
+  name: iter8-istio-dr
+rules:
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - destinationrules
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - patch
+  - update
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    creator: iter8
+  name: iter8-istio-vs
+rules:
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - virtualservices
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - patch
+  - update
+  - delete
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -1154,6 +1037,42 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: iter8-experiments
+subjects:
+- kind: ServiceAccount
+  name: iter8-controller
+  namespace: iter8-system
+- kind: ServiceAccount
+  name: iter8-handlers
+  namespace: iter8-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    creator: iter8
+  name: iter8-istio-dr
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: iter8-istio-dr
+subjects:
+- kind: ServiceAccount
+  name: iter8-controller
+  namespace: iter8-system
+- kind: ServiceAccount
+  name: iter8-handlers
+  namespace: iter8-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    creator: iter8
+  name: iter8-istio-vs
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: iter8-istio-vs
 subjects:
 - kind: ServiceAccount
   name: iter8-controller

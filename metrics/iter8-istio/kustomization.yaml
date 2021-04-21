@@ -1,0 +1,9 @@
+namespace: iter8-istio
+
+resources:
+- metrics/error-count.yaml
+- metrics/error-rate.yaml
+- metrics/mean-latency.yaml
+- metrics/request-count.yaml
+- metrics/le500ms-latency-percentile.yaml
+- namespace.yaml

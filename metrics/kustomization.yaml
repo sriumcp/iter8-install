@@ -16,6 +16,7 @@ commonLabels:
 
 resources:
 - iter8-knative
+- iter8-istio
 
 # By default, the URLTempalate for Iter8 metrics that are installed 'out-of-the-box'
 # point to the Prometheus instance installed as part of the prometheus-add-on.
