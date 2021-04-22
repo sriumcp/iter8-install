@@ -8,7 +8,7 @@ spec:
   - name: query
     value: |
       (sum(increase(istio_request_duration_milliseconds_bucket{le='500',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0)) / (sum(increase(istio_request_duration_milliseconds_bucket{le='+Inf',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0))
-  type: gauge
+  type: Gauge
   sampleSize: iter8-istio/request-count
   provider: prometheus
   jqExpression: ".data.result[0].value[1] | tonumber"

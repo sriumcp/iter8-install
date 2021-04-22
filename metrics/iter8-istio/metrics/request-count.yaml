@@ -8,7 +8,7 @@ spec:
     value: |
       sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime]))
   description: Number of requests
-  type: counter
+  type: Counter
   provider: prometheus
   jqExpression: ".data.result[0].value[1] | tonumber"
   urlTemplate: http://prometheus-operated.iter8-system:9090/api/v1/query

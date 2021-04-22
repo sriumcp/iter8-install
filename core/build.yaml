@@ -426,7 +426,7 @@ spec:
                                   sampleSize:
                                     description: SampleSize is the  size of the sample
                                       used for computing this metric. This field is
-                                      applicable only to gauge metrics
+                                      applicable only to Gauge metrics
                                     format: int32
                                     minimum: 0
                                     type: integer
@@ -729,7 +729,7 @@ spec:
                               minLength: 1
                               type: string
                             sampleSize:
-                              description: SampleSize is a reference to a counter
+                              description: SampleSize is a reference to a Counter
                                 metric resource. It needs to indicte the number of
                                 data points over which this metric is computed.
                               minLength: 1
@@ -741,11 +741,11 @@ spec:
                               minLength: 1
                               type: string
                             type:
-                              default: gauge
+                              default: Gauge
                               description: Type of the metric
                               enum:
-                              - counter
-                              - gauge
+                              - Counter
+                              - Gauge
                               type: string
                             units:
                               description: Units used for display only
@@ -906,7 +906,7 @@ spec:
                 minLength: 1
                 type: string
               sampleSize:
-                description: SampleSize is a reference to a counter metric resource.
+                description: SampleSize is a reference to a Counter metric resource.
                   It needs to indicte the number of data points over which this metric
                   is computed.
                 minLength: 1
@@ -917,11 +917,11 @@ spec:
                 minLength: 1
                 type: string
               type:
-                default: gauge
+                default: Gauge
                 description: Type of the metric
                 enum:
-                - counter
-                - gauge
+                - Counter
+                - Gauge
                 type: string
               units:
                 description: Units used for display only
