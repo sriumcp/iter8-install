@@ -424,7 +424,7 @@ spec:
                                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                                     x-kubernetes-int-or-string: true
                                   sampleSize:
-                                    description: SampleSize is the  size of the sample
+                                    description: SampleSize is the size of the sample
                                       used for computing this metric. This field is
                                       applicable only to Gauge metrics
                                     format: int32
@@ -671,19 +671,33 @@ spec:
                         metadata:
                           type: object
                         spec:
-                          description: MetricSpec defines the desired state of Metric
+                          description: MetricSpec defines the attributes of the Metric
                           properties:
+                            authType:
+                              description: AuthType is the type of authentication
+                                used in the HTTP request
+                              enum:
+                              - Basic
+                              - Bearer
+                              - APIKey
+                              type: string
+                            body:
+                              description: Body is the string used to construct the
+                                (json) body of the HTTP request Body may be templated,
+                                in which Iter8 will attempt to substitute placeholders
+                                in the template at query time using version information.
+                                This field is relevant only when Method == POST
+                              type: string
                             description:
                               description: Text description of the metric
                               type: string
                             headerTemplates:
-                              description: HeaderTemplates are templates for headers
-                                that should be passed to the metrics backend. Typically
-                                these are authentication headers. Any fields of the
-                                form '$name' are treated as variables whose value
-                                is looked up in the secret referred to by spec.secretRef.
-                                If the secret does not contain the variable as a key,
-                                the full string "$name" is used.
+                              description: HeaderTemplates are key/value pairs corresponding
+                                to HTTP request headers and their values. Value may
+                                be templated, in which Iter8 will attempt to substitute
+                                placeholders in the template at query time using Secret.
+                                Placeholder substitution will be attempted only when
+                                Secret != nil.
                               items:
                                 description: NamedValue name/value to be used in constructing
                                   a REST query to backend metrics server
@@ -700,14 +714,24 @@ spec:
                                 type: object
                               type: array
                             jqExpression:
-                              description: JQExpression defines how the value of the
-                                metric should be extracted from the metric value returned
-                                by a query to the backend metrics server
-                              minLength: 1
+                              description: JQExpression defines the jq expression
+                                used by Iter8 to extract the metric value from the
+                                (JSON) response returned by the HTTP URL queried by
+                                Iter8. An empty string is a valid jq expression.
+                              type: string
+                            method:
+                              default: GET
+                              description: Method is the HTTP method used in the HTTP
+                                request
+                              enum:
+                              - GET
+                              - POST
                               type: string
                             params:
-                              description: Params are key/value pairs used to construct
-                                a REST query to the metrics backend
+                              description: Params are key/value pairs corresponding
+                                to HTTP request parameters Value may be templated,
+                                in which Iter8 will attempt to substitute placeholders
+                                in the template at query time using version information.
                               items:
                                 description: NamedValue name/value to be used in constructing
                                   a REST query to backend metrics server
@@ -724,21 +748,21 @@ spec:
                                 type: object
                               type: array
                             provider:
-                              description: Provider identifies the metric backend
-                                including its authentication properties and its unmarshaller
-                              minLength: 1
+                              description: Provider identifies the type of metric
+                                database. Used for informational purposes.
                               type: string
                             sampleSize:
-                              description: SampleSize is a reference to a Counter
-                                metric resource. It needs to indicte the number of
-                                data points over which this metric is computed.
-                              minLength: 1
+                              description: SampleSize is a reference to a counter
+                                metric resource. The value of the SampleSize metric
+                                denotes the number of data points over which this
+                                metric is computed. This field is relevant only when
+                                Type == Gauge
                               type: string
                             secret:
-                              description: SecretRef the name of a kubernetes Secret
-                                containing authentication details for the metrics
-                                backend
-                              minLength: 1
+                              description: Secret is a reference to the Kubernetes
+                                secret. Secret contains data used for HTTP authentication.
+                                Secret may also contain data used for placeholder
+                                substitution in HeaderTemplates and URLTemplate.
                               type: string
                             type:
                               default: Gauge
@@ -748,17 +772,21 @@ spec:
                               - Gauge
                               type: string
                             units:
-                              description: Units used for display only
+                              description: Units of the metric. Used for informational
+                                purposes.
                               type: string
                             urlTemplate:
-                              description: URLTemplate is a template of the url of
-                                metrics backend. Any fields pf the form '$name' are
-                                treated as variables whose value is looked up in the
-                                secret referred to by spec.secretRef. If the secret
-                                does not contain the variable as a key, the full string
-                                "$name" is used.
+                              description: URLTemplate is a template for the URL queried
+                                during the HTTP request. Typically, URLTemplate is
+                                expected to be the actual URL without any placeholders.
+                                However, as indicated by its name, URLTemplate may
+                                be templated. In this case, Iter8 will attempt to
+                                substitute placeholders in the URLTemplate at query
+                                time using Secret. Placeholder substitution will be
+                                attempted only when Secret != nil.
                               type: string
                           required:
+                          - jqExpression
                           - urlTemplate
                           type: object
                       type: object
@@ -834,7 +862,7 @@ spec:
     name: v2alpha2
     schema:
       openAPIV3Schema:
-        description: Metric is the Schema for the metrics API
+        description: Metric is the schema for Iter8 metrics API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -849,18 +877,31 @@ spec:
           metadata:
             type: object
           spec:
-            description: MetricSpec defines the desired state of Metric
+            description: MetricSpec defines the attributes of the Metric
             properties:
+              authType:
+                description: AuthType is the type of authentication used in the HTTP
+                  request
+                enum:
+                - Basic
+                - Bearer
+                - APIKey
+                type: string
+              body:
+                description: Body is the string used to construct the (json) body
+                  of the HTTP request Body may be templated, in which Iter8 will attempt
+                  to substitute placeholders in the template at query time using version
+                  information. This field is relevant only when Method == POST
+                type: string
               description:
                 description: Text description of the metric
                 type: string
               headerTemplates:
-                description: HeaderTemplates are templates for headers that should
-                  be passed to the metrics backend. Typically these are authentication
-                  headers. Any fields of the form '$name' are treated as variables
-                  whose value is looked up in the secret referred to by spec.secretRef.
-                  If the secret does not contain the variable as a key, the full string
-                  "$name" is used.
+                description: HeaderTemplates are key/value pairs corresponding to
+                  HTTP request headers and their values. Value may be templated, in
+                  which Iter8 will attempt to substitute placeholders in the template
+                  at query time using Secret. Placeholder substitution will be attempted
+                  only when Secret != nil.
                 items:
                   description: NamedValue name/value to be used in constructing a
                     REST query to backend metrics server
@@ -877,14 +918,22 @@ spec:
                   type: object
                 type: array
               jqExpression:
-                description: JQExpression defines how the value of the metric should
-                  be extracted from the metric value returned by a query to the backend
-                  metrics server
-                minLength: 1
+                description: JQExpression defines the jq expression used by Iter8
+                  to extract the metric value from the (JSON) response returned by
+                  the HTTP URL queried by Iter8. An empty string is a valid jq expression.
+                type: string
+              method:
+                default: GET
+                description: Method is the HTTP method used in the HTTP request
+                enum:
+                - GET
+                - POST
                 type: string
               params:
-                description: Params are key/value pairs used to construct a REST query
-                  to the metrics backend
+                description: Params are key/value pairs corresponding to HTTP request
+                  parameters Value may be templated, in which Iter8 will attempt to
+                  substitute placeholders in the template at query time using version
+                  information.
                 items:
                   description: NamedValue name/value to be used in constructing a
                     REST query to backend metrics server
@@ -901,20 +950,19 @@ spec:
                   type: object
                 type: array
               provider:
-                description: Provider identifies the metric backend including its
-                  authentication properties and its unmarshaller
-                minLength: 1
+                description: Provider identifies the type of metric database. Used
+                  for informational purposes.
                 type: string
               sampleSize:
-                description: SampleSize is a reference to a Counter metric resource.
-                  It needs to indicte the number of data points over which this metric
-                  is computed.
-                minLength: 1
+                description: SampleSize is a reference to a counter metric resource.
+                  The value of the SampleSize metric denotes the number of data points
+                  over which this metric is computed. This field is relevant only
+                  when Type == Gauge
                 type: string
               secret:
-                description: SecretRef the name of a kubernetes Secret containing
-                  authentication details for the metrics backend
-                minLength: 1
+                description: Secret is a reference to the Kubernetes secret. Secret
+                  contains data used for HTTP authentication. Secret may also contain
+                  data used for placeholder substitution in HeaderTemplates and URLTemplate.
                 type: string
               type:
                 default: Gauge
@@ -924,16 +972,18 @@ spec:
                 - Gauge
                 type: string
               units:
-                description: Units used for display only
+                description: Units of the metric. Used for informational purposes.
                 type: string
               urlTemplate:
-                description: URLTemplate is a template of the url of metrics backend.
-                  Any fields pf the form '$name' are treated as variables whose value
-                  is looked up in the secret referred to by spec.secretRef. If the
-                  secret does not contain the variable as a key, the full string "$name"
-                  is used.
+                description: URLTemplate is a template for the URL queried during
+                  the HTTP request. Typically, URLTemplate is expected to be the actual
+                  URL without any placeholders. However, as indicated by its name,
+                  URLTemplate may be templated. In this case, Iter8 will attempt to
+                  substitute placeholders in the URLTemplate at query time using Secret.
+                  Placeholder substitution will be attempted only when Secret != nil.
                 type: string
             required:
+            - jqExpression
             - urlTemplate
             type: object
         type: object
@@ -1321,7 +1371,7 @@ data:
           containers:
           - name: iter8-handler
             # to change handler version, edit the line below
-            image: iter8/handler:0.1.13
+            image: iter8/handler:0.1.14
             command: ["handler"]
             args: ["run", "-a", "$(ACTION)"]
             env:
@@ -1381,7 +1431,7 @@ spec:
         creator: iter8
     spec:
       containers:
-      - image: iter8/iter8-analytics:2.0.0
+      - image: iter8/iter8-analytics:2.1.0
         imagePullPolicy: Always
         name: iter8-analytics
         resources: {}
@@ -1421,7 +1471,7 @@ spec:
               fieldPath: metadata.namespace
         - name: HANDLERS_DIR
           value: /handlers
-        image: iter8/etc3:0.1.19
+        image: iter8/etc3:0.1.21
         imagePullPolicy: Always
         name: manager
         resources:
