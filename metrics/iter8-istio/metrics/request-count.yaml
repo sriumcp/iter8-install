@@ -6,7 +6,7 @@ spec:
   params:
   - name: query
     value: |
-      sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime]))
+      sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s]))
   description: Number of requests
   type: Counter
   provider: prometheus

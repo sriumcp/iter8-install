@@ -7,7 +7,7 @@ spec:
   params:
   - name: query
     value: |
-      (sum(increase(istio_request_duration_milliseconds_bucket{le='500',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0)) / (sum(increase(istio_request_duration_milliseconds_bucket{le='+Inf',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0))
+      (sum(increase(istio_request_duration_milliseconds_bucket{le='500',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0)) / (sum(increase(istio_request_duration_milliseconds_bucket{le='+Inf',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0))
   type: Gauge
   sampleSize: iter8-istio/request-count
   provider: prometheus

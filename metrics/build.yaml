@@ -27,7 +27,7 @@ spec:
   params:
   - name: query
     value: |
-      sum(increase(istio_requests_total{response_code=~'5..',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0)
+      sum(increase(istio_requests_total{response_code=~'5..',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0)
   provider: prometheus
   type: Counter
   urlTemplate: http://prometheus-operated.iter8-system:9090/api/v1/query
@@ -45,7 +45,7 @@ spec:
   params:
   - name: query
     value: |
-      (sum(increase(istio_requests_total{response_code=~'5..',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0)) / (sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0))
+      (sum(increase(istio_requests_total{response_code=~'5..',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0)) / (sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0))
   provider: prometheus
   sampleSize: request-count
   type: Gauge
@@ -64,7 +64,7 @@ spec:
   params:
   - name: query
     value: |
-      (sum(increase(istio_request_duration_milliseconds_bucket{le='500',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0)) / (sum(increase(istio_request_duration_milliseconds_bucket{le='+Inf',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0))
+      (sum(increase(istio_request_duration_milliseconds_bucket{le='500',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0)) / (sum(increase(istio_request_duration_milliseconds_bucket{le='+Inf',reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0))
   provider: prometheus
   sampleSize: iter8-istio/request-count
   type: Gauge
@@ -83,7 +83,7 @@ spec:
   params:
   - name: query
     value: |
-      (sum(increase(istio_request_duration_milliseconds_sum{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0)) / (sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime])) or on() vector(0))
+      (sum(increase(istio_request_duration_milliseconds_sum{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0)) / (sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s])) or on() vector(0))
   provider: prometheus
   sampleSize: request-count
   type: Gauge
@@ -103,7 +103,7 @@ spec:
   params:
   - name: query
     value: |
-      sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[$elapsedTime]))
+      sum(increase(istio_requests_total{reporter='source',destination_workload='$revision',destination_workload_namespace='$namespace'}[${elapsedTime}s]))
   provider: prometheus
   type: Counter
   urlTemplate: http://prometheus-operated.iter8-system:9090/api/v1/query
@@ -121,7 +121,7 @@ spec:
   params:
   - name: query
     value: |
-      histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{revision_name='$revision'}[$elapsedTime])) by (le))
+      histogram_quantile(0.95, sum(rate(revision_app_request_latencies_bucket{revision_name='$revision'}[${elapsedTime}s])) by (le))
   provider: prometheus
   sampleSize: request-count
   type: Gauge
@@ -141,7 +141,7 @@ spec:
   params:
   - name: query
     value: |
-      sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[$elapsedTime])) or on() vector(0)
+      sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[${elapsedTime}s])) or on() vector(0)
   provider: prometheus
   type: Counter
   urlTemplate: http://prometheus-operated.iter8-system:9090/api/v1/query
@@ -159,7 +159,7 @@ spec:
   params:
   - name: query
     value: |
-      (sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[$elapsedTime])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$elapsedTime])) or on() vector(0))
+      (sum(increase(revision_app_request_latencies_count{response_code_class!='2xx',revision_name='$revision'}[${elapsedTime}s])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[${elapsedTime}s])) or on() vector(0))
   provider: prometheus
   sampleSize: request-count
   type: Gauge
@@ -178,7 +178,7 @@ spec:
   params:
   - name: query
     value: |
-      (sum(increase(revision_app_request_latencies_sum{revision_name='$revision'}[$elapsedTime])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$elapsedTime])) or on() vector(0))
+      (sum(increase(revision_app_request_latencies_sum{revision_name='$revision'}[${elapsedTime}s])) or on() vector(0)) / (sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[${elapsedTime}s])) or on() vector(0))
   provider: prometheus
   sampleSize: request-count
   type: Gauge
@@ -198,7 +198,7 @@ spec:
   params:
   - name: query
     value: |
-      sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[$elapsedTime])) or on() vector(0)
+      sum(increase(revision_app_request_latencies_count{revision_name='$revision'}[${elapsedTime}s])) or on() vector(0)
   provider: prometheus
   type: Counter
   urlTemplate: http://prometheus-operated.iter8-system:9090/api/v1/query
