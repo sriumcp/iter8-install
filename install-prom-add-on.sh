@@ -5,7 +5,7 @@ set -e
 # Step 0: Export GIT_ACCOUNT and TAG
 # GIT_ACCOUNT enables manual testing from a fork
 export GIT_ACCOUNT="${GIT_ACCOUNT:-iter8-tools}"
-export TAG="${TAG:-v0.4.2}"
+export TAG="${TAG:-v0.4.4}"
 
 # Step 1: Install Prometheus add-on
 # This step assumes you have installed Iter8 using install.sh
