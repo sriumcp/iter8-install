@@ -36,9 +36,8 @@ rules:
   verbs:
   - get
   - list
-  - watch
 ---
-# This role enables creation, watching and deletion of jobs
+# This role enables creation, reading, watching and deletion of jobs
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -53,8 +52,6 @@ rules:
   - delete
   - get
   - list
-  - patch
-  - update
   - watch
 ---
 # This role enables leader election by Iter8 controller in the Iter8 namespace
@@ -81,15 +78,3 @@ rules:
   - events
   verbs:
   - create
----
-# This role enables reading secrets
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: secret-reader
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs: ["get", "list", "watch"]
