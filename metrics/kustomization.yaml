@@ -15,7 +15,6 @@ commonLabels:
   creator: iter8
 
 resources:
-- iter8-knative
 - iter8-istio
 
 # By default, the URLTempalate for Iter8 metrics that are installed 'out-of-the-box'

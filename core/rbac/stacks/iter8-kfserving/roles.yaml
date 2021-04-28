@@ -1,13 +1,13 @@
-# This cluster role enables manipulation of Knative services
+# This cluster role enables manipulation of KFServing inferenceservices
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ksvc-for-kn
+  name: isvc-for-kfs
 rules:
 - apiGroups:
-  - serving.knative.dev
+  - serving.kubeflow.org
   resources:
-  - services
+  - inferenceservices
   verbs:
   - get
   - list
@@ -18,7 +18,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: vs-for-kn
+  name: vs-for-kfs
 rules:
 - apiGroups:
   - networking.istio.io
@@ -29,4 +29,3 @@ rules:
   - list
   - patch
   - update
-

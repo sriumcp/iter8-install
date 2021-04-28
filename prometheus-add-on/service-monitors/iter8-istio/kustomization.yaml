@@ -1,4 +1,2 @@
-namespace: iter8-istio
-
 resources:
 - dataplane-monitor.yaml
