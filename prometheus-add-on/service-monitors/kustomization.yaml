@@ -10,6 +10,7 @@
 # To change selectively turn off stacks, comment out the corresponding resources
 # in these three files.
 ###########
+namespace: iter8-system
 
 namePrefix: iter8-
 
@@ -19,3 +20,4 @@ commonLabels:
 resources:
 - iter8-knative
 - iter8-istio
+- iter8-kfserving
