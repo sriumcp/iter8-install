@@ -17,15 +17,10 @@ jobs:
           echo "Installing core"
           kustomize build core | kubectl apply -f -
 
-          echo "Installing metrics"
-          kubectl wait crd -l creator=iter8 --for condition=established --timeout=120s
-          kustomize build metrics | kubectl apply -f -
-
           echo "Installing prometheus-add-on"
           kustomize build prometheus-add-on/prometheus-operator | kubectl apply -f -
           kubectl wait crd -l creator=iter8 --for condition=established --timeout=120s
           kustomize build prometheus-add-on/prometheus | kubectl apply -f -
-          kustomize build prometheus-add-on/service-monitors | kubectl apply -f -
 
           echo "Verifying installation"
           sleep 30.0
