@@ -3,13 +3,48 @@ kind: ServiceMonitor
 metadata:
   labels:
     creator: iter8
-  name: iter8-istio-dataplane-monitoring
-  namespace: iter8-istio
+  name: iter8-ksvc-for-kfs
+  namespace: iter8-system
 spec:
   endpoints:
-  - path: /metrics
+  - interval: 10s
+    port: http-usermetric
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      networking.internal.knative.dev/serviceType: Private
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    creator: iter8
+  name: iter8-ksvc-for-kn
+  namespace: iter8-system
+spec:
+  endpoints:
+  - interval: 10s
+    port: http-usermetric
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      networking.internal.knative.dev/serviceType: Private
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    creator: iter8
+  name: iter8-pods-for-istio
+  namespace: iter8-system
+spec:
+  endpoints:
+  - interval: 10s
+    path: /metrics
     targetPort: 9080
-  - interval: 15s
+  - interval: 10s
     path: /stats/prometheus
     relabelings:
     - action: keep
@@ -34,20 +69,3 @@ spec:
     matchExpressions:
     - key: istio-prometheus-ignore
       operator: DoesNotExist
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  labels:
-    creator: iter8
-  name: iter8-ksvc-monitoring
-  namespace: iter8-knative
-spec:
-  endpoints:
-  - interval: 10s
-    port: http-usermetric
-  namespaceSelector:
-    any: true
-  selector:
-    matchLabels:
-      networking.internal.knative.dev/serviceType: Private
