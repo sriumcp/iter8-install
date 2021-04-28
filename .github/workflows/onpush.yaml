@@ -20,10 +20,8 @@ jobs:
     - name: update build.yaml files
       run: |
           kustomize build core > core/build.yaml
-          kustomize build metrics > metrics/build.yaml
           kustomize build prometheus-add-on/prometheus > prometheus-add-on/prometheus/build.yaml
           kustomize build prometheus-add-on/prometheus-operator > prometheus-add-on/prometheus-operator/build.yaml
-          kustomize build prometheus-add-on/service-monitors > prometheus-add-on/service-monitors/build.yaml
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
