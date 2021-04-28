@@ -3,11 +3,11 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: isvc
+  name: isvc-for-kfs
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: isvc-reader-writer
+  name: isvc-for-kfs
 subjects:
 - kind: ServiceAccount
   name: controller
@@ -19,11 +19,11 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: vs
+  name: vs-for-kfs
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: vs-reader-writer
+  name: vs-for-kfs
 subjects:
 - kind: ServiceAccount
   name: controller
