@@ -1117,6 +1117,23 @@ kind: ClusterRole
 metadata:
   labels:
     creator: iter8
+  name: iter8-isvc-for-kfs
+rules:
+- apiGroups:
+  - serving.kubeflow.org
+  resources:
+  - inferenceservices
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    creator: iter8
   name: iter8-jobs
 rules:
 - apiGroups:
@@ -1135,7 +1152,7 @@ kind: ClusterRole
 metadata:
   labels:
     creator: iter8
-  name: iter8-ksvc-reader-writer
+  name: iter8-ksvc-for-kn
 rules:
 - apiGroups:
   - serving.knative.dev
@@ -1167,7 +1184,24 @@ kind: ClusterRole
 metadata:
   labels:
     creator: iter8
-  name: iter8-vs-reader-writer
+  name: iter8-vs-for-kfs
+rules:
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - virtualservices
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    creator: iter8
+  name: iter8-vs-for-kn
 rules:
 - apiGroups:
   - networking.istio.io
@@ -1254,6 +1288,24 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     creator: iter8
+  name: iter8-isvc-for-kfs
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: iter8-isvc-for-kfs
+subjects:
+- kind: ServiceAccount
+  name: iter8-controller
+  namespace: iter8-system
+- kind: ServiceAccount
+  name: iter8-handlers
+  namespace: iter8-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    creator: iter8
   name: iter8-jobs
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -1269,11 +1321,11 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     creator: iter8
-  name: iter8-ksvc
+  name: iter8-ksvc-for-kn
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: iter8-ksvc-reader-writer
+  name: iter8-ksvc-for-kn
 subjects:
 - kind: ServiceAccount
   name: iter8-controller
@@ -1305,11 +1357,29 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     creator: iter8
-  name: iter8-vs
+  name: iter8-vs-for-kfs
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: iter8-vs-reader-writer
+  name: iter8-vs-for-kfs
+subjects:
+- kind: ServiceAccount
+  name: iter8-controller
+  namespace: iter8-system
+- kind: ServiceAccount
+  name: iter8-handlers
+  namespace: iter8-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    creator: iter8
+  name: iter8-vs-for-kn
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: iter8-vs-for-kn
 subjects:
 - kind: ServiceAccount
   name: iter8-controller
