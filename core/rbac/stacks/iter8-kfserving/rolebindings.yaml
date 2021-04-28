@@ -1,0 +1,31 @@
+# This cluster role binding enables Iter8 controller and handler to manipulate 
+# KFServing inference services in the cluster in any namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: isvc
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: isvc-reader-writer
+subjects:
+- kind: ServiceAccount
+  name: controller
+- kind: ServiceAccount
+  name: handlers
+---
+# This role binding enables Iter8 controller and handler to manipulate 
+# Istio virtual services in the cluster in any namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: vs
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: vs-reader-writer
+subjects:
+- kind: ServiceAccount
+  name: controller
+- kind: ServiceAccount
+  name: handlers
