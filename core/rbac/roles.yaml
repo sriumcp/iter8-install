@@ -22,6 +22,12 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
 ---
 # This role enables reading metrics
 kind: ClusterRole
